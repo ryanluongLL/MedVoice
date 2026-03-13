@@ -1,0 +1,185 @@
+.main {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a2342 0%, #0d2f50 50%, #0a3d4a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Georgia', serif;
+  padding: 2rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header {
+  text-align: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.logoIcon {
+  background: #02C39A;
+  color: #0a2342;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.logoText {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.tagline {
+  color: #8eaab5;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.uploadCard {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px dashed rgba(2, 195, 154, 0.4);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.uploadCardDragging {
+  background: rgba(2, 195, 154, 0.08);
+  border: 2px dashed #02C39A;
+}
+
+.uploadIcon {
+  font-size: 2.5rem;
+}
+
+.uploadTitle {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.uploadSub {
+  color: #8eaab5;
+  font-size: 0.85rem;
+  margin: 0.25rem 0;
+}
+
+.fileName {
+  color: #02C39A;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.fileReady {
+  color: #8eaab5;
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0;
+}
+
+.browseBtn {
+  background: transparent;
+  border: 1px solid rgba(2, 195, 154, 0.5);
+  color: #02C39A;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.analyzeBtn {
+  width: 100%;
+  background: #02C39A;
+  color: #0a2342;
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.analyzeBtnDisabled {
+  background: rgba(2, 195, 154, 0.3);
+  color: rgba(10, 35, 66, 0.5);
+  cursor: not-allowed;
+}
+
+.trustNote {
+  color: #8eaab5;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.steps {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.step {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stepIcon {
+  font-size: 1.5rem;
+}
+
+.stepTitle {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0.4rem 0 0.2rem;
+}
+
+.stepDesc {
+  color: #8eaab5;
+  font-size: 0.78rem;
+  margin: 0;
+  line-height: 1.4;
+}
