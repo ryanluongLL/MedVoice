@@ -2,6 +2,7 @@
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
+import { UserButton } from '@clerk/nextjs'
 
 export default function Home() {
   const [dragging, setDragging] = useState(false)
@@ -68,6 +69,7 @@ export default function Home() {
             <span className={styles.logoIcon}>＋</span>
             <span className={styles.logoText}>ClearBill</span>
           </div>
+          <UserButton afterSignOutUrl="/sign-in" />
           <p className={styles.tagline}>
             Upload your medical bill. Get a plain-English breakdown — instantly.
           </p>
@@ -135,7 +137,6 @@ export default function Home() {
             </div>
           ))}
         </div>
-
       </div>
     </main>
   )
