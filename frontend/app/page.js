@@ -3,12 +3,14 @@ import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 import { UserButton } from '@clerk/nextjs'
+import LanguageSelector from './components/LanguageSelector/LanguageSelector'
 
 export default function Home() {
   const [dragging, setDragging] = useState(false)
   const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [language, setLanguage] = useState('en')
   const router = useRouter()
 
   const handleDrop = useCallback((e) => {
@@ -41,6 +43,7 @@ export default function Home() {
     try {
       const formData = new FormData()
       formData.append('file', file)
+      formData.append('language', language)
 
       const res = await fetch('http://localhost:8000/analyze-pdf', {
         method: 'POST',
@@ -110,6 +113,7 @@ export default function Home() {
         {error && <p className={styles.error}>{error}</p>}
 
         {/* Analyze Button */}
+        <LanguageSelector selected={language} onChange={setLanguage} />
         <button
           onClick={handleAnalyze}
           disabled={!file || loading}
