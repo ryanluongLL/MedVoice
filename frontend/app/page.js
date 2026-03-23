@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 import { UserButton } from '@clerk/nextjs'
 import LanguageSelector from './components/LanguageSelector/LanguageSelector'
-
+import { useUser } from '@clerk/nextjs'
 export default function Home() {
   const [dragging, setDragging] = useState(false)
   const [file, setFile] = useState(null)
@@ -12,7 +12,8 @@ export default function Home() {
   const [error, setError] = useState(null)
   const [language, setLanguage] = useState('en')
   const router = useRouter()
-
+  const { user } = useUser()
+  
   const handleDrop = useCallback((e) => {
     e.preventDefault()
     setDragging(false)
@@ -44,6 +45,9 @@ export default function Home() {
       const formData = new FormData()
       formData.append('file', file)
       formData.append('language', language)
+      formData.append('file', file)
+      formData.append('language', language)
+      formData.append('user_id', user?.id || 'anoymous') 
 
       const res = await fetch('http://localhost:8000/analyze-pdf', {
         method: 'POST',
