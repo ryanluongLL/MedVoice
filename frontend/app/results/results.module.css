@@ -1,7 +1,7 @@
 .main{
     min-height: 100vh;
     background: linear-gradient(135deg, #0a2342 0%, #0d2f50 50%, #0a3d4a 100%);
-    font-family: 'Georgia', serif;
+    font-family: sans-serif;
     padding: 2rem;
 }
 
@@ -74,7 +74,8 @@
     font-size: 1rem;
     line-height: 1.6;
     margin: 0 0 1.25rem;
-    font-family: 'Courier New', monospace;
+    font-family: sans-serif;
+
 }
 
 .totalRow{
@@ -95,7 +96,8 @@
     color: #02C39A;
     font-size: 1.5rem;
     font-weight: 700;
-    font-family: 'Courier New', monospace;
+    font-family: sans-serif;
+
 }
 
 .redFlagCard{
@@ -133,7 +135,8 @@
     font-size: 0.9rem;
     margin: 0;
     line-height: 1.5;
-    font-family: 'Courier New', monospace;
+    font-family: sans-serif;
+
 }
 
 .section{
@@ -180,7 +183,8 @@
     color: #02c39a;
     font-weight: 700;
     font-size: 1rem;
-    font-family: 'Courier New', monospace;
+    font-family: sans-serif;
+
 }
 
 .chargeExplanation{

@@ -76,7 +76,16 @@ export default function Home() {
             <span className={styles.logoIcon}>＋</span>
             <span className={styles.logoText}>ClearBill</span>
           </div>
-          <UserButton afterSignOutUrl="/sign-in" />
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem'
+          }}>
+            <button onClick={() => router.push('/history')} className={styles.historyBtn}>My history
+            </button>
+              <UserButton afterSignOutUrl="/sign-in" />
+
+          </div>
           <p className={styles.tagline}>
             Upload your medical bill. Get a plain-English breakdown — instantly.
           </p>

@@ -150,5 +150,13 @@ def get_history(user_id: str, db: Session = Depends(get_db)):
     return [
         {
             "id": r.id,
+            "filename": r.language,
+            "summary": r.summary,
+            "total_amount": r.total_amount,
+            "charges": r.charges,
+            "red_flags": r.red_flags,
+            "advice": r.advice,
+            "created_at": r.created_at.isoformat(),
         }
+        for r in records
     ]
