@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Georgia', serif;
+  font-family: sans-serif;
   padding: 2rem;
 }
 
@@ -182,4 +182,20 @@
   font-size: 0.78rem;
   margin: 0;
   line-height: 1.4;
+}
+
+.historyBtn{
+  background: transparent;
+  border: 1px solid rgba(2,195,154,0.4);
+  color: #02c39a;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: sans-serif;
+  transition: all 0.2s;
+}
+
+.historyBtn:hover{
+  background: rgba(2,195,154,0.1);
 }

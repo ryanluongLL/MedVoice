@@ -30,7 +30,7 @@
   min-height: 38px;
   cursor: pointer;
   transition: all 0.15s ease;
-  font-family: 'Georgia', serif;
+  font-family: sans-serif;
   width: 100%;
 }
 
