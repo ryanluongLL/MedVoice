@@ -2,8 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from routers import analyze
+from database import create_tables
 
 load_dotenv()
+
+create_tables()
 
 app = FastAPI(title="ClearBill API")
 

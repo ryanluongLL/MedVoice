@@ -2,9 +2,10 @@ from fastapi import APIRouter, UploadFile, File, Form
 from pydantic import BaseModel
 from anthropic import Anthropic
 from dotenv import load_dotenv
-import pdfplumber
-import json
-import io
+import pdfplumber, json, io, uuid
+from database import get_db, BillAnalysis
+from sqlalchemy.orm import Session
+from fastapi import Depends
 
 LANGUAGE_MAP = {
     "en": "English",
@@ -66,7 +67,12 @@ def analyze_bill(request: BillRequest):
 
 
 @router.post("/analyze-pdf")
-async def analyze_pdf(file: UploadFile = File(...), language: str = Form("en")):
+async def analyze_pdf(
+    file: UploadFile = File(...),
+    language: str = Form("en"),
+    user_id: str = Form("anonymous"),
+    db: Session = Depends(get_db),
+):
     language_name = LANGUAGE_MAP.get(language, "English")
     contents = await file.read()
 
@@ -113,4 +119,20 @@ async def analyze_pdf(file: UploadFile = File(...), language: str = Form("en")):
         .strip()
     )
     result = json.loads(clean)
+
+    # save to database
+    record = BillAnalysis(
+        id=str(uuid.uuid4()),
+        user_id=user_id,
+        filename=file.filename,
+        language=language,
+        summary=result.get("summary"),
+        total_amount=result.get("total_amount"),
+        charges=result.get("charges"),
+        red_flags=result.get("red_flags"),
+        advice=result.get("advice"),
+    )
+    db.add(record)
+    db.commit()
+
     return result
