@@ -136,3 +136,19 @@ async def analyze_pdf(
     db.commit()
 
     return result
+
+
+@router.get("/history/{user_id}")
+def get_history(user_id: str, db: Session = Depends(get_db)):
+    records = (
+        db.query(BillAnalysis)
+        .filter(BillAnalysis.user_id == user_id)
+        .order_by(BillAnalysis.created_at.desc())
+        .all()
+    )
+
+    return [
+        {
+            "id": r.id,
+        }
+    ]
