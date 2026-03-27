@@ -49,7 +49,7 @@ export default function History() {
                     </button>
                     <div className={styles.logo}>
                         <span className={styles.logoIcon}>+</span>
-                        <span className={styles.logoText}>ClearBill</span>
+                        <span className={styles.logoText}>MedVoice</span>
                     </div>
                 </div>
                 <p className={styles.title}>Your Bill History</p>

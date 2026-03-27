@@ -74,7 +74,7 @@ export default function Home() {
         <div className={styles.header}>
           <div className={styles.logo}>
             <span className={styles.logoIcon}>＋</span>
-            <span className={styles.logoText}>ClearBill</span>
+            <span className={styles.logoText}>MedVoice</span>
           </div>
           <div style={{
             display: 'flex',

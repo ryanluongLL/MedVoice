@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import styles from "./results.module.css"
+import AppealForm from "../components/AppealForm/AppealForm"
 
 export default function Results() {
     const [data, setData] = useState(null)
@@ -28,7 +29,7 @@ export default function Results() {
                     </button>
                     <div className={styles.logo}>
                         <span className={styles.logoIcon}>+</span>
-                        <span className={styles.logoText}>ClearBill</span>
+                        <span className={styles.logoText}>MedVoice</span>
                     </div>
                 </div>
 
@@ -78,6 +79,10 @@ export default function Results() {
                         <p className={styles.adviceLabel}>💡 RECOMMENDED ACTION</p>
                         <p className={styles.adviceText}>{data.advice}</p>
                     </div>
+                )}
+                {/* Appeal Letter */}
+                {data.red_flags?.length > 0 && (
+                    <AppealForm analysis={data} />
                 )}
             </div>
         </main>
