@@ -1,65 +1,271 @@
-.main {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0a2342 0%, #0d2f50 50%, #0a3d4a 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.main{
   font-family: sans-serif;
-  padding: 2rem;
 }
 
-.container {
+.hero{
+  min-height: 100vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 0.2rem;
+}
+
+.nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.navLogo{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navLogoIcon{
+  background: #02c39a;
+  color: #0a2342;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 1.1rem;
+  font-weight: bold;
+}
+
+.navLogoText{
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #0a2342;
+}
+
+.navActions{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navHistoryBtn{
+  background: transparent;
+  border: 1px solid rgba(2,195,154,0.5);
+  color: #028090;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-family: sans-serif;
+  transition: all 0.2s;
+}
+
+.navHistoryBtn:hover{
+  background: rgba(2,195,154,0.08);
+  
+}
+
+.navSignInBtn{
+  background: #0a2342;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-family: sans-serif;
+  transition: all 0.2s;
+}
+
+.navSignInBtn:hover{
+  background: #0d2f50;
+}
+
+/* hero content */
+.heroContent{
+  max-width: 700px;
+  margin: 5rem auto 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.heroBadge{
+  background: rgba(2,195,154,0.1);
+  color: #028090;
+  border: 1px solid rgba(2,195,154,0.3);
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.heroTitle{
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #0a2342;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.heroTitleAccent{
+  color: #02c39a;
+}
+
+.heroSubtitle{
+  color: #5a7a8a;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0;
+}
+
+.heroBtn{
+  background: #0a2342;
+  color: #fff;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: sans-serif;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+.heroBth:hover{
+  background: #02c39a;
+  color: #0a2342;
+}
+
+/* stats */
+.stats{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto 4rem;
+}
+
+.statCard{
+  background: #f8fafb;
+  border: 1px solid #e8f0f3;
+  border-radius: 16px;
+  padding: 1.75rem;
+  text-align: center;
+}
+
+.statValue{
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #0a2342;
+  margin: 0 0 0.5rem;
+}
+
+.statLabel{
+  color: #5a7a8a;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* app section */
+.appSection{
+  background: #f4f7f9;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.appContainer{
   width: 100%;
   max-width: 560px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
-.header {
+.appHeader {
   text-align: center;
+  margin-bottom: 0.5rem;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
-}
-
-.logoIcon {
-  background: #02C39A;
+.appTitle {
   color: #0a2342;
-  border-radius: 8px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.logoText {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #ffffff;
-  letter-spacing: -0.5px;
+  margin: 0 0 0.5rem;
 }
 
-.tagline {
-  color: #8eaab5;
+.appSubtitle {
+  color: #5a7a8a;
   font-size: 0.95rem;
-  line-height: 1.5;
-  max-width: 400px;
-  margin: 0 auto;
+  margin: 0;
 }
 
+/* Sign in prompt */
+.signInPrompt {
+  background: #ffffff;
+  border: 1px solid #e8f0f3;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.signInIcon {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.signInTitle {
+  color: #0a2342;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.signInDesc {
+  color: #5a7a8a;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.signInBtn {
+  margin-top: 0.5rem;
+  background: #0a2342;
+  color: #ffffff;
+  border: none;
+  padding: 0.85rem 2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+font-family: sans-serif; transition: all 0.2s;
+}
+
+.signInBtn:hover {
+  background: #02C39A;
+  color: #0a2342;
+}
+
+/* Upload card */
 .uploadCard {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.04);
+  background: #ffffff;
   border: 2px dashed rgba(2, 195, 154, 0.4);
   border-radius: 16px;
   padding: 3rem 2rem;
@@ -73,8 +279,8 @@
 }
 
 .uploadCardDragging {
-  background: rgba(2, 195, 154, 0.08);
-  border: 2px dashed #02C39A;
+  background: rgba(2, 195, 154, 0.05);
+  border-color: #02C39A;
 }
 
 .uploadIcon {
@@ -82,16 +288,16 @@
 }
 
 .uploadTitle {
-  color: #ffffff;
-  font-size: 1.1rem;
-  font-weight: 500;
+  color: #0a2342;
+  font-size: 1.05rem;
+  font-weight: 600;
   margin: 0;
 }
 
 .uploadSub {
   color: #8eaab5;
   font-size: 0.85rem;
-  margin: 0.25rem 0;
+  margin: 0.15rem 0;
 }
 
 .fileName {
@@ -104,98 +310,92 @@
 .fileReady {
   color: #8eaab5;
   font-size: 0.85rem;
-  margin: 0.25rem 0 0;
+  margin: 0.2rem 0 0;
 }
 
 .browseBtn {
   background: transparent;
   border: 1px solid rgba(2, 195, 154, 0.5);
-  color: #02C39A;
+  color: #028090;
   padding: 0.5rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   transition: all 0.2s;
 }
 
+.browseBtn:hover {
+  background: rgba(2, 195, 154, 0.08);
+}
+
 .error {
-  color: #ff6b6b;
+  color: #e53e3e;
   font-size: 0.875rem;
   margin: 0;
 }
 
+/* Analyze button */
 .analyzeBtn {
   width: 100%;
-  background: #02C39A;
-  color: #0a2342;
+  background: #0a2342;
+  color: #ffffff;
   border: none;
   padding: 1rem;
   border-radius: 12px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.3px;
+font-family: sans-serif; transition: all 0.2s;
+}
+
+.analyzeBtn:hover {
+  background: #02C39A;
+  color: #0a2342;
 }
 
 .analyzeBtnDisabled {
-  background: rgba(2, 195, 154, 0.3);
-  color: rgba(10, 35, 66, 0.5);
+  background: #c8d8e0;
+  color: #8eaab5;
   cursor: not-allowed;
+}
+
+.analyzeBtnDisabled:hover {
+  background: #c8d8e0;
+  color: #8eaab5;
+}
+
+/* Loading spinner */
+.loadingRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .trustNote {
   color: #8eaab5;
   font-size: 0.8rem;
-  margin: 0;
-}
-
-.steps {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-  margin-top: 0.5rem;
-}
-
-.step {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 12px;
-  padding: 1rem;
   text-align: center;
-}
-
-.stepIcon {
-  font-size: 1.5rem;
-}
-
-.stepTitle {
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin: 0.4rem 0 0.2rem;
-}
-
-.stepDesc {
-  color: #8eaab5;
-  font-size: 0.78rem;
   margin: 0;
-  line-height: 1.4;
 }
 
-.historyBtn{
-  background: transparent;
-  border: 1px solid rgba(2,195,154,0.4);
-  color: #02c39a;
-  padding: 0.4rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-family: sans-serif;
-  transition: all 0.2s;
-}
-
-.historyBtn:hover{
-  background: rgba(2,195,154,0.1);
+/* Header actions */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
