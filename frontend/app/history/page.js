@@ -15,7 +15,7 @@ export default function History() {
         
         const fetchHistory = async () => {
             try {
-                const res = await fetch(`http://localhost:8000/history/${user.id}`)
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/history/${user.id}`)
                 const data = await res.json()
                 setRecords(data)
             }

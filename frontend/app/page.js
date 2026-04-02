@@ -59,7 +59,7 @@ export default function Home() {
       formData.append('language', language)
       formData.append('user_id', user?.id || 'anoymous') 
 
-      const res = await fetch('http://localhost:8000/analyze-pdf', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/analyze-pdf`, {
         method: 'POST',
         body: formData,
       })
