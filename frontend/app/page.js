@@ -1,18 +1,30 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef} from 'react'
 import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
-import { UserButton } from '@clerk/nextjs'
+import { SignInButton, UserButton } from '@clerk/nextjs'
 import LanguageSelector from './components/LanguageSelector/LanguageSelector'
 import { useUser } from '@clerk/nextjs'
+
+const STATS = [
+  { value: '51%', label: 'of insured adults struggle to understand at least one asepect of their health insurance' },
+  { value: '$300B', label: 'lost annually in the US due to the medical billing errors' },
+  { value: '8 int 10', label: 'medical bills contain at least one error according to billing experts'}
+]
+
 export default function Home() {
   const [dragging, setDragging] = useState(false)
   const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [language, setLanguage] = useState('en')
+  const { user, isLoaded } = useUser()
   const router = useRouter()
-  const { user } = useUser()
+  const appRef = useRef(null)
+
+  const scrollToApp = () => {
+    appRef.current?.scrollIntoView({behavior: 'smooth'})
+  }
   
   const handleDrop = useCallback((e) => {
     e.preventDefault()
@@ -45,8 +57,6 @@ export default function Home() {
       const formData = new FormData()
       formData.append('file', file)
       formData.append('language', language)
-      formData.append('file', file)
-      formData.append('language', language)
       formData.append('user_id', user?.id || 'anoymous') 
 
       const res = await fetch('http://localhost:8000/analyze-pdf', {
@@ -68,93 +78,131 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.container}>
-
-        {/* Header */}
-        <div className={styles.header}>
-          <div className={styles.logo}>
-            <span className={styles.logoIcon}>＋</span>
-            <span className={styles.logoText}>MedVoice</span>
+      {/* hero section */}
+      <section className={styles.hero}>
+        <nav className={styles.nav}>
+          <div className={styles.navLogo}>
+            <span className={styles.navLogoIcon}>+</span>
+            <span className={styles.navLogoText}>MedVoice</span>
           </div>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem'
-          }}>
-            <button onClick={() => router.push('/history')} className={styles.historyBtn}>My history
-            </button>
-              <UserButton afterSignOutUrl="/sign-in" />
-
+          <div className={styles.navActions}>
+            {isLoaded && user ? (
+              <>
+                <button onClick={() => router.push('/history')} className={styles.navHistoryBtn}>
+                  My history
+                </button>
+                  <UserButton afterSignOutUrl="/sign-in" />
+              </>
+            ) : (
+                <SignInButton mode="redirect">
+                  <button className={styles.navSignInBtn}>Sign In</button>
+                </SignInButton>
+            )}
           </div>
-          <p className={styles.tagline}>
-            Upload your medical bill. Get a plain-English breakdown — instantly.
+        </nav>
+
+        {/* hero content */}
+        <div className={styles.heroContent}>
+          <span className={styles.heroBadge}>AI-Powered Healthcare Billing</span>
+          <h1 className={styles.heroTitle}>
+            Your medical bill  <br />
+            <span className={styles.heroTitleAccent}>finally explained.</span>
+          </h1>
+          <p className={styles.heroSubtitle}>
+            Upload any medical bill and get a complete breakdown of every charge, potential errors flagged, and a professional appeal letter - in seconds.
           </p>
+          <button onClick={scrollToApp} className={styles.heroBtn}>
+            Analyze My Bill →
+          </button>
         </div>
 
-        {/* Upload Card */}
-        <div
-          className={`${styles.uploadCard} ${dragging ? styles.uploadCardDragging : ''}`}
-          onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
-          onDragLeave={() => setDragging(false)}
-          onDrop={handleDrop}
-        >
-          <div className={styles.uploadIcon}>📄</div>
-          {file ? (
-            <div>
-              <p className={styles.fileName}>{file.name}</p>
-              <p className={styles.fileReady}>Ready to analyze</p>
+        {/* Stats */}
+        <div className={styles.stats}>
+          {STATS.map((stat) => {
+            <div key={stat.value} className={styles.statCard}>
+              <p className={styles.statValue}>{stat.value}</p>
+              <p className={styles.statLabel}>{stat.label}</p>
+            </div>
+            })}
+        </div>
+      </section>
+
+      {/* app section */}
+      <section ref={ appRef} className={styles.appSection}>
+        <div className={styles.appContainer}>
+          <div className={styles.appHeader}>
+            <h2 className={styles.appTitle}>Analyze your bill</h2>
+            <p className={styles.appSubtitle}>
+              Upload a PDF of your medical bill and select your preferred language
+            </p>
+          </div>
+
+          {!isLoaded ? null : !user ? (
+            <div className={styles.signInPrompt}>
+              <p className={styles.signInIcon}></p>
+              <p className={styles.signInTitle}>Sign in to get started</p>
+              <p className={styles.signInDesc}>
+                Create a free account to analyze your bill and save your history
+              </p>
+              <SignInButton mode="redirect">
+                  <button className={styles.signInBtn}>Sign In / Sign Up</button>
+              </SignInButton>
             </div>
           ) : (
-            <div>
-              <p className={styles.uploadTitle}>Drag & drop your bill here</p>
-              <p className={styles.uploadSub}>or</p>
-            </div>
+            <>
+                <div
+                  className={`${styles.uploadCard} ${dragging ? styles.uploadCardDragging : ''}`}
+                  onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
+                  onDragLeave={() => setDragging(false)}
+                  onDrop={handleDrop}
+                >
+                  <div className={styles.uploadIcon}>📄</div>
+                  {file ? (
+                    <div>
+                      <p className={styles.fileName}>{file.name}</p>
+                      <p className={styles.fileReady}>Ready to analyze</p>
+                    </div>
+                  ) : (
+                      <div>
+                        <p className={styles.uploadTitle}>Drag & drop your bill here</p>
+                        <p className={styles.uploadSub}>or</p>
+                      </div>
+                  )}
+                  <label className={styles.browseBtn}>
+                    {file ? 'Change File' : 'Browse PDF'}
+                    <input
+                      type="file"
+                      accept=".pdf"
+                      onChange={handleFileInput}
+                      style={{display: 'none'}}
+                    />
+                  </label>
+                </div>
+
+                {error && <p className={styles.error}>{error}</p>}
+                
+                <LanguageSelector selected={language} onChange={setLanguage} />
+
+                <button
+                  onClick={handleAnalyze}
+                  disabled={!file || loading}
+                  className={`${styles.analyzeBtn} ${!file || loading ? styles.analyzeBtnDisabled : ''}`}
+                >
+                  {loading ? (
+                    <span className={styles.loadingRow}>
+                      <span className={styles.spinner} />
+                        Analyzing your bill...
+                    </span>
+                  ) : 'Analyze My Bill'}
+                </button>
+
+                <p className={styles.trustNote}>
+                  🔒 Your bill is never stored. Analysis happens in real time.
+                </p>
+            </>
           )}
-
-          <label className={styles.browseBtn}>
-            {file ? 'Change File' : 'Browse PDF'}
-            <input
-              type="file"
-              accept=".pdf"
-              onChange={handleFileInput}
-              style={{ display: 'none' }}
-            />
-          </label>
         </div>
-
-        {/* Error */}
-        {error && <p className={styles.error}>{error}</p>}
-
-        {/* Analyze Button */}
-        <LanguageSelector selected={language} onChange={setLanguage} />
-        <button
-          onClick={handleAnalyze}
-          disabled={!file || loading}
-          className={`${styles.analyzeBtn} ${!file || loading ? styles.analyzeBtnDisabled : ''}`}
-        >
-          {loading ? 'Analyzing...' : 'Analyze My Bill'}
-        </button>
-
-        {/* Trust note */}
-        <p className={styles.trustNote}>
-          🔒 Your bill is never stored. Analysis happens in real time.
-        </p>
-
-        {/* How it works */}
-        <div className={styles.steps}>
-          {[
-            { icon: '📤', title: 'Upload', desc: 'Drop your PDF bill' },
-            { icon: '🤖', title: 'Analyze', desc: 'Claude AI reads every charge' },
-            { icon: '✅', title: 'Understand', desc: 'Get plain-English results' },
-          ].map((step) => (
-            <div key={step.title} className={styles.step}>
-              <span className={styles.stepIcon}>{step.icon}</span>
-              <p className={styles.stepTitle}>{step.title}</p>
-              <p className={styles.stepDesc}>{step.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      </section>
     </main>
   )
 }
