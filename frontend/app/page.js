@@ -30,21 +30,23 @@ export default function Home() {
     e.preventDefault()
     setDragging(false)
     const dropped = e.dataTransfer.files[0]
-    if (dropped?.type === 'application/pdf') {
+    const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
+    if (allowed.includes(dropped?.type)) {
       setFile(dropped)
       setError(null)
     } else {
-      setError('Please upload a PDF file')
+      setError("Please uoload a PDF or image file (JPG, PNG, WEBP")
     }
   }, [])
 
   const handleFileInput = (e) => {
     const selected = e.target.files[0]
-    if (selected?.type === 'application/pdf') {
+    const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/web']
+    if (allowed.includes(selected?.type)) {
       setFile(selected)
       setError(null)
     } else {
-      setError('Please upload a PDF file')
+      setError("Please upload a PDF or image file (JPG, PNG, WEBP)")
     }
   }
 
@@ -165,14 +167,14 @@ export default function Home() {
                   ) : (
                       <div>
                         <p className={styles.uploadTitle}>Drag & drop your bill here</p>
-                        <p className={styles.uploadSub}>or</p>
+                        <p className={styles.uploadSub}>PDF, JPG, PNG or WEBP</p>
                       </div>
                   )}
                   <label className={styles.browseBtn}>
-                    {file ? 'Change File' : 'Browse PDF'}
+                    {file ? 'Change File' : 'Browse File'}
                     <input
                       type="file"
-                      accept=".pdf"
+                      accept=".pdf,.jpg,.jpeg,.png,.webp"
                       onChange={handleFileInput}
                       style={{display: 'none'}}
                     />

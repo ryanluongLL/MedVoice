@@ -6,6 +6,7 @@ import pdfplumber, json, io, uuid
 from database import get_db, BillAnalysis
 from sqlalchemy.orm import Session
 from fastapi import Depends
+import base64
 
 LANGUAGE_MAP = {
     "en": "English",
@@ -75,19 +76,26 @@ async def analyze_pdf(
 ):
     language_name = LANGUAGE_MAP.get(language, "English")
     contents = await file.read()
+    filename = file.filename.lower()
 
-    with pdfplumber.open(io.BytesIO(contents)) as pdf:
-        text = ""
-        for page in pdf.pages:
-            text += page.extract_text() or ""
+    # Determine file type
+    is_image = filename.endswith((".jpg", ".jpeg", ".png", ".webp"))
+    is_pdf = filename.endswith(".pdf")
 
-    if not text.strip():
-        return {"error": "Could not extract text from this PDF"}
+    if not is_image and not is_pdf:
+        return {"error": "Unsupported file type. Please upload a PDF or image file."}
 
-    response = client.messages.create(
-        model="claude-opus-4-5",
-        max_tokens=1024,
-        messages=[
+    if is_pdf:
+        # Extract text from PDF using pdfplumber
+        with pdfplumber.open(io.BytesIO(contents)) as pdf:
+            text = ""
+            for page in pdf.pages:
+                text += page.extract_text() or ""
+
+        if not text.strip():
+            return {"error": "Could not extract text from this PDF"}
+
+        messages = [
             {
                 "role": "user",
                 "content": f"""You are a helpful medical bill analyst.
@@ -96,9 +104,9 @@ async def analyze_pdf(
                     "summary": "brief plain-English summary of the bill",
                     "total_amount": "total amount due as a string",
                     "charges":[
-                    {{"name": "charge name", "amount": "amount", "explanation": "plain English explanation" }}
+                    {{"name": "charge name", "amount": "amount", "explanation": "plain English explanation"}}
                     ],
-                    "red_flags": ["list of any suspicious or unsual charges"],
+                    "red_flags": ["list of any suspicious or unusual charges"],
                     "advice": "one actionable piece of advice for the patient"
                 }}
                 Important: Write all text values in the JSON in this language: {language_name}.
@@ -107,7 +115,57 @@ async def analyze_pdf(
                 Bill text:
                 {text}""",
             }
-        ],
+        ]
+
+    else:
+        # Send image directly to Claude vision
+        image_data = base64.standard_b64encode(contents).decode("utf-8")
+
+        # Determine media type
+        if filename.endswith(".png"):
+            media_type = "image/png"
+        elif filename.endswith(".webp"):
+            media_type = "image/webp"
+        else:
+            media_type = "image/jpeg"
+
+        messages = [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "image",
+                        "source": {
+                            "type": "base64",
+                            "media_type": media_type,
+                            "data": image_data,
+                        },
+                    },
+                    {
+                        "type": "text",
+                        "text": f"""You are a helpful medical bill analyst.
+                        Analyze the medical bill in this image and return a JSON response with this exact structure:
+                        {{
+                            "summary": "brief plain-English summary of the bill",
+                            "total_amount": "total amount due as a string",
+                            "charges":[
+                            {{"name": "charge name", "amount": "amount", "explanation": "plain English explanation"}}
+                            ],
+                            "red_flags": ["list of any suspicious or unusual charges"],
+                            "advice": "one actionable piece of advice for the patient"
+                        }}
+                        Important: Write all text values in the JSON in this language: {language_name}.
+                        Only the JSON structure keys should remain in English. All values must be in {language_name}.
+                        Return only the JSON, no extra text.""",
+                    },
+                ],
+            }
+        ]
+
+    response = client.messages.create(
+        model="claude-opus-4-5",
+        max_tokens=1024,
+        messages=messages,
     )
 
     raw = response.content[0].text
@@ -120,7 +178,7 @@ async def analyze_pdf(
     )
     result = json.loads(clean)
 
-    # save to database
+    # Save to database
     record = BillAnalysis(
         id=str(uuid.uuid4()),
         user_id=user_id,
