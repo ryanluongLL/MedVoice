@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import styles from "./results.module.css"
 import AppealForm from "../components/AppealForm/AppealForm"
+import BillChat from "../components/BillChat/BillChat"
 
 export default function Results() {
     const [data, setData] = useState(null)
@@ -84,6 +85,9 @@ export default function Results() {
                 {data.red_flags?.length > 0 && (
                     <AppealForm analysis={data} />
                 )}
+
+                {/* Follow up Q&A */}
+                <BillChat analysis={data} />
             </div>
         </main>
     )

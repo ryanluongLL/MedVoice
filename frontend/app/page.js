@@ -108,7 +108,7 @@ export default function Home() {
           <span className={styles.heroBadge}>AI-Powered Healthcare Billing</span>
           <h1 className={styles.heroTitle}>
             Your medical bill  <br />
-            <span className={styles.heroTitleAccent}>finally explained.</span>
+            <span className={styles.heroTitleAccent}>finally explained</span>
           </h1>
           <p className={styles.heroSubtitle}>
             Upload any medical bill and get a complete breakdown of every charge, potential errors flagged, and a professional appeal letter - in seconds.
