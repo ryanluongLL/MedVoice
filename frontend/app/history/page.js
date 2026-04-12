@@ -11,6 +11,7 @@ export default function History() {
     const router = useRouter()
 
     useEffect(() => {
+        document.title = 'Bill History | MedVoice'
         if (!user) return
         
         const fetchHistory = async () => {
