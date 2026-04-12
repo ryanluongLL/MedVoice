@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import styles from './appeal.module.css'
 import jsPDF from "jspdf"
+import toast from "react-hot-toast"
 
 export default function Appeal() {
     const [letter, setLetter] = useState('')
@@ -10,6 +11,7 @@ export default function Appeal() {
 
     //check if appeal letter exist in localStorage
     useEffect(() => {
+        document.title = 'Appeal Letter | MedVoice'
         const stored = localStorage.getItem('appealLetter')
         if (!stored) {
             router.push('/')
@@ -21,7 +23,7 @@ export default function Appeal() {
     const handleCopy = () => {
         //read from and write to the user's clipboard and let them paste it anywhere
         navigator.clipboard.writeText(letter)
-        alert('Letter copied to clipboard!')
+        toast.success('Letter copied to clipboard!')
     }
 
     const handleDownloadTxt = () => {

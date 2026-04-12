@@ -10,6 +10,7 @@ export default function Results() {
     const router = useRouter()
 
     useEffect(() => {
+        document.title = 'Your Bill Analysis | MedVoice'
         const stored = localStorage.getItem("billAnalysis")
         if (!stored) {
             router.push('/')
