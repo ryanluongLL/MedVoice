@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useUser } from "@clerk/nextjs"
 import styles from './history.module.css'
-
+import Spinner from "../components/Spinner/Spinner"
 export default function History() {
     const [records, setRecords] = useState([])
     const [loading, setLoading] = useState(true)
@@ -57,9 +57,7 @@ export default function History() {
                 <p className={styles.subtitle}>All your past analyses in one place</p>
 
                 {/* Loading */}
-                {loading && (
-                    <p className={styles.loading}>Loading your history...</p>
-                )}
+                {loading && <Spinner message="Loading your history..."/>}
 
                 {/* Empty State */}
                 {!loading && records.length === 0 && (

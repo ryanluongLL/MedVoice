@@ -35,13 +35,13 @@ export default function Home() {
       setFile(dropped)
       setError(null)
     } else {
-      setError("Please uoload a PDF or image file (JPG, PNG, WEBP")
+      setError("Please upload a PDF or image file (JPG, PNG, WEBP")
     }
   }, [])
 
   const handleFileInput = (e) => {
     const selected = e.target.files[0]
-    const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/web']
+    const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
     if (allowed.includes(selected?.type)) {
       setFile(selected)
       setError(null)
@@ -59,7 +59,7 @@ export default function Home() {
       const formData = new FormData()
       formData.append('file', file)
       formData.append('language', language)
-      formData.append('user_id', user?.id || 'anoymous') 
+      formData.append('user_id', user?.id || 'anonymous') 
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/analyze-pdf`, {
         method: 'POST',
@@ -120,12 +120,12 @@ export default function Home() {
 
         {/* Stats */}
         <div className={styles.stats}>
-          {STATS.map((stat) => {
+          {STATS.map((stat) => (
             <div key={stat.value} className={styles.statCard}>
               <p className={styles.statValue}>{stat.value}</p>
               <p className={styles.statLabel}>{stat.label}</p>
             </div>
-            })}
+            ))}
         </div>
       </section>
 
