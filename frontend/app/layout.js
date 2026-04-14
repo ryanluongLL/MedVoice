@@ -2,7 +2,7 @@ import { DM_Sans, Inter } from "next/font/google"
 import "./globals.css"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Toaster } from 'react-hot-toast'
-
+import FloatingChat from "./components/FloatingChat/FloatingChat"
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
@@ -32,6 +32,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={`${dmSans.variable} ${inter.variable}`}>
           {children}
+          <FloatingChat />
           <Toaster
             position="bottom-right"
             toastOptions={{

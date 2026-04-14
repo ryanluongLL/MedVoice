@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import styles from "./results.module.css"
 import AppealForm from "../components/AppealForm/AppealForm"
-import BillChat from "../components/BillChat/BillChat"
 
 export default function Results() {
     const [data, setData] = useState(null)
@@ -11,6 +10,7 @@ export default function Results() {
 
     useEffect(() => {
         document.title = 'Your Bill Analysis | MedVoice'
+        window.scrollTo(0,0)
         const stored = localStorage.getItem("billAnalysis")
         if (!stored) {
             router.push('/')
@@ -87,8 +87,7 @@ export default function Results() {
                     <AppealForm analysis={data} />
                 )}
 
-                {/* Follow up Q&A */}
-                <BillChat analysis={data} />
+                
             </div>
         </main>
     )

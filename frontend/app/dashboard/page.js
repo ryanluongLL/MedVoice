@@ -19,7 +19,7 @@ const tooltipStyle = {
     border: '1px solid #e8f0f3',
     backgroundColor: '#0a2342',
     color: '#ffffff',
-    fontFamily: 'var(--font-inter), sans-serif',
+    fontFamily: SERIF,
     fontSize: '0.85rem',
 }
 
@@ -126,32 +126,36 @@ export default function Dashboard() {
                         {spendingOverTime.length > 0 && (
                             <div className={styles.chartCard}>
                                 <p className={styles.chartTitle}>Spending Over Time</p>
-                                <ResponsiveContainer width="100%" height={250}>
-                                    <LineChart data={spendingOverTime} style={{ outline: 'none' }}>
-                                        <CartesianGrid strokeDasharray="3 3" stroke="#e8f0f3" />
-                                        <XAxis
-                                            dataKey="date"
-                                            tick={{ fontSize: 12, fill: '#5a7a8a', fontFamily: MONO }}
-                                        />
-                                        <YAxis
-                                            tick={{ fontSize: 12, fill: '#5a7a8a', fontFamily: MONO }}
-                                        />
-                                        <Tooltip
-                                            formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Amount']}
-                                            contentStyle={tooltipStyle}
-                                            labelStyle={{ color: '#02C39A', fontWeight: 'bold' }}
-                                            itemStyle={{ color: '#ffffff' }}
-                                        />
-                                        <Line
-                                            type="monotone"
-                                            dataKey="amount"
-                                            stroke="#02C39A"
-                                            strokeWidth={2}
-                                            dot={{ fill: '#02C39A', r: 4 }}
-                                            activeDot={{ r: 6 }}
-                                        />
-                                    </LineChart>
-                                </ResponsiveContainer>
+                                <div style={{ overflowX: 'auto' }}>
+                                    <div style={{minWidth:'400px'}}>
+                                        <ResponsiveContainer width="100%" height={250}>
+                                            <LineChart data={spendingOverTime} style={{ outline: 'none' }}>
+                                                <CartesianGrid strokeDasharray="3 3" stroke="#e8f0f3" />
+                                                <XAxis
+                                                    dataKey="date"
+                                                    tick={{ fontSize: 12, fill: '#5a7a8a', fontFamily: MONO }}
+                                                />
+                                                <YAxis
+                                                    tick={{ fontSize: 12, fill: '#5a7a8a', fontFamily: MONO }}
+                                                />
+                                                <Tooltip
+                                                    formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Amount']}
+                                                    contentStyle={tooltipStyle}
+                                                    labelStyle={{ color: '#02C39A', fontWeight: 'bold' }}
+                                                    itemStyle={{ color: '#ffffff' }}
+                                                />
+                                                <Line
+                                                    type="monotone"
+                                                    dataKey="amount"
+                                                    stroke="#02C39A"
+                                                    strokeWidth={2}
+                                                    dot={{ fill: '#02C39A', r: 4 }}
+                                                    activeDot={{ r: 6 }}
+                                                />
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                </div>
                             </div>
                         )}
 
@@ -159,30 +163,32 @@ export default function Dashboard() {
                         {topCharges.length > 0 && (
                             <div className={styles.chartCard}>
                                 <p className={styles.chartTitle}>Most Common Charges</p>
-                                <ResponsiveContainer width="100%" height={350} >
-                                    <BarChart data={topCharges} layout="vertical"
-                                        margin={{ left: 10 }} style={{ outline: 'none' }}
-                                    >
-                                        <CartesianGrid strokeDasharray="3 3" stroke="#e8f0f3" />
-                                        <XAxis
-                                            type="number"
-                                            tick={{ fontSize: 12, fill: '#5a7a8a', fontFamily: MONO }}
-                                        />
-                                        <YAxis
-                                            dataKey="name"
-                                            type="category"
-                                            tick={{ fontSize: 11, fill: '#5a7a8a', fontFamily: MONO }}
-                                            width={300}
-                                        />
-                                        <Tooltip
-                                            formatter={(value) => [value, 'Times']}
-                                            contentStyle={tooltipStyle}
-                                            labelStyle={{ color: '#02C39A', fontWeight: 'bold' }}
-                                            itemStyle={{ color: '#ffffff' }}
-                                        />
-                                        <Bar dataKey="count" fill="#02C39A" radius={[0, 4, 4, 0]} />
-                                    </BarChart>
-                                </ResponsiveContainer>
+                                <div style={{ overflowX: 'auto' }}>
+                                    <div style={{ minWidth: '500px' }}>
+                                        <ResponsiveContainer width="100%" height={350}>
+                                            <BarChart data={topCharges} layout="vertical" margin={{ left: 10 }} style={{ outline: 'none' }}>
+                                                <CartesianGrid strokeDasharray="3 3" stroke="#e8f0f3" />
+                                                <XAxis
+                                                    type="number"
+                                                    tick={{ fontSize: 12, fill: '#5a7a8a', fontFamily: MONO }}
+                                                />
+                                                <YAxis
+                                                    dataKey="name"
+                                                    type="category"
+                                                    tick={{ fontSize: 11, fill: '#5a7a8a', fontFamily: MONO }}
+                                                    width={200}
+                                                />
+                                                <Tooltip
+                                                    formatter={(value) => [value, 'Times']}
+                                                    contentStyle={tooltipStyle}
+                                                    labelStyle={{ color: '#02C39A', fontWeight: 'bold' }}
+                                                    itemStyle={{ color: '#ffffff' }}
+                                                />
+                                                <Bar dataKey="count" fill="#02C39A" radius={[0, 4, 4, 0]} />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                </div>
                             </div>
                         )}
 

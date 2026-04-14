@@ -112,3 +112,14 @@
   background: #c8d8e0;
   color: #8eaab5;
 }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wrapper {
+        padding: 1.25rem;
+    }
+}

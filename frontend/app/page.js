@@ -5,11 +5,12 @@ import styles from './page.module.css'
 import { SignInButton, UserButton } from '@clerk/nextjs'
 import LanguageSelector from './components/LanguageSelector/LanguageSelector'
 import { useUser } from '@clerk/nextjs'
+import { motion } from 'motion/react'
 
 const STATS = [
   { value: '51%', label: 'of insured adults struggle to understand at least one asepect of their health insurance' },
   { value: '$300B', label: 'lost annually in the US due to the medical billing errors' },
-  { value: '8 int 10', label: 'medical bills contain at least one error according to billing experts'}
+  { value: '8 in 10', label: 'medical bills contain at least one error according to billing experts'}
 ]
 
 export default function Home() {
@@ -108,27 +109,63 @@ export default function Home() {
 
         {/* hero content */}
         <div className={styles.heroContent}>
-          <span className={styles.heroBadge}>AI-Powered Healthcare Billing</span>
-          <h1 className={styles.heroTitle}>
-            Your medical bill  <br />
+          <motion.span
+            className={styles.heroBadge}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{duration: 0.5, ease: 'easeOut'}}
+          >
+              AI-Powered Healthcare Billing
+          </motion.span>
+          
+          <motion.h1
+            className={styles.heroTitle}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
+        >
+            Your medical bill <br />
             <span className={styles.heroTitleAccent}>finally explained</span>
-          </h1>
-          <p className={styles.heroSubtitle}>
-            Upload any medical bill and get a complete breakdown of every charge, potential errors flagged, and a professional appeal letter - in seconds.
-          </p>
-          <button onClick={scrollToApp} className={styles.heroBtn}>
-            Analyze My Bill →
-          </button>
+          </motion.h1>
+          
+          <motion.p
+              className={styles.heroSubtitle}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+          >
+              Upload any medical bill and get a complete breakdown of every charge,
+              potential errors flagged, and a professional appeal letter - in seconds.
+          </motion.p>
+
+          <motion.button
+              onClick={scrollToApp}
+              className={styles.heroBtn}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.45, ease: 'easeOut' }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+          >
+              Analyze My Bill →
+          </motion.button>
         </div>
 
         {/* Stats */}
         <div className={styles.stats}>
-          {STATS.map((stat) => (
-            <div key={stat.value} className={styles.statCard}>
-              <p className={styles.statValue}>{stat.value}</p>
-              <p className={styles.statLabel}>{stat.label}</p>
-            </div>
-            ))}
+          {STATS.map((stat, index) => (
+            <motion.div
+                key={stat.value}
+                className={styles.statCard}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
+            >
+                <p className={styles.statValue}>{stat.value}</p>
+                <p className={styles.statLabel}>{stat.label}</p>
+            </motion.div>
+        ))}
         </div>
       </section>
 
@@ -136,11 +173,25 @@ export default function Home() {
       <section ref={ appRef} className={styles.appSection}>
         <div className={styles.appContainer}>
           <div className={styles.appHeader}>
-            <h2 className={styles.appTitle}>Analyze your bill</h2>
-            <p className={styles.appSubtitle}>
-              Upload a PDF of your medical bill and select your preferred language
-            </p>
-          </div>
+            <motion.h2
+                className={styles.appTitle}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+            >
+                Analyze your bill
+            </motion.h2>
+            <motion.p
+                className={styles.appSubtitle}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
+            >
+                Upload a PDF of your medical bill and select your preferred language
+            </motion.p>
+        </div>
 
           {!isLoaded ? null : !user ? (
             <div className={styles.signInPrompt}>
@@ -155,12 +206,14 @@ export default function Home() {
             </div>
           ) : (
             <>
-                <div
+                <motion.div
                   className={`${styles.uploadCard} ${dragging ? styles.uploadCardDragging : ''}`}
                   onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
                   onDragLeave={() => setDragging(false)}
                   onDrop={handleDrop}
-                >
+                  whileHover={{ scale: 1.01, boxShadow: '0 8px 24px rgba(2, 195, 154, 0.12)' }}
+                  transition={{ duration: 0.2 }}
+              >
                   <div className={styles.uploadIcon}>📄</div>
                   {file ? (
                     <div>
@@ -182,24 +235,28 @@ export default function Home() {
                       style={{display: 'none'}}
                     />
                   </label>
-                </div>
+                </motion.div>
 
                 {error && <p className={styles.error}>{error}</p>}
                 
                 <LanguageSelector selected={language} onChange={setLanguage} />
 
-                <button
+                <motion.button
                   onClick={handleAnalyze}
                   disabled={!file || loading}
                   className={`${styles.analyzeBtn} ${!file || loading ? styles.analyzeBtnDisabled : ''}`}
-                >
+                  animate={file && !loading ? { scale: [1, 1.02, 1] } : {}}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                  whileHover={file && !loading ? { scale: 1.02 } : {}}
+                  whileTap={file && !loading ? { scale: 0.98 } : {}}
+              >
                   {loading ? (
-                    <span className={styles.loadingRow}>
-                      <span className={styles.spinner} />
-                        Analyzing your bill...
-                    </span>
+                      <span className={styles.loadingRow}>
+                          <span className={styles.spinner} />
+                          Analyzing your bill...
+                      </span>
                   ) : 'Analyze My Bill'}
-                </button>
+              </motion.button>
 
                 <p className={styles.trustNote}>
                   🔒 Your bill is never stored. Analysis happens in real time.
