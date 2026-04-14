@@ -30,7 +30,8 @@
   min-height: 38px;
   cursor: pointer;
   transition: all 0.15s ease;
-font-family: sans-serif; width: 100%;
+  font-family: var(--font-inter), sans-serif;
+  width: 100%;
 }
 
 .btn:hover {

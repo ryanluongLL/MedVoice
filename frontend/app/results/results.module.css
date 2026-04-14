@@ -1,7 +1,8 @@
 .main {
   min-height: 100vh;
   background: #f4f7f9;
-font-family: sans-serif; padding: 2rem;
+  font-family: var(--font-inter), sans-serif;
+  padding: 2rem;
 }
 
 .container {
@@ -25,7 +26,8 @@ font-family: sans-serif; padding: 2rem;
   color: #5a7a8a;
   cursor: pointer;
   font-size: 0.875rem;
-font-family: sans-serif; padding: 0;
+  font-family: var(--font-inter), sans-serif;
+  padding: 0;
 }
 
 .backBtn:hover {
