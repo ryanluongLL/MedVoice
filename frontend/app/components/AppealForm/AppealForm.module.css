@@ -63,7 +63,8 @@
   color: #0a2342;
   font-size: 0.9rem;
   padding: 0.6rem 0.85rem;
-font-family: sans-serif; outline: none;
+  font-family: var(--font-inter), sans-serif;
+  outline: none;
   transition: border-color 0.2s;
   width: 100%;
   box-sizing: border-box;
@@ -92,7 +93,8 @@ font-family: sans-serif; outline: none;
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-font-family: sans-serif; transition: all 0.2s;
+  font-family: var(--font-inter), sans-serif; 
+  transition: all 0.2s;
 }
 
 .submitBtn:hover {

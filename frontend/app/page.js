@@ -93,6 +93,9 @@ export default function Home() {
                 <button onClick={() => router.push('/history')} className={styles.navHistoryBtn}>
                   My history
                 </button>
+                <button onClick={() => router.push('/dashboard')} className={styles.navHistoryBtn}>
+                  Dashboard
+                </button>
                   <UserButton afterSignOutUrl="/sign-in" />
               </>
             ) : (

@@ -1,5 +1,5 @@
 .main{
-  font-family: sans-serif;
+  font-family: var(--font-dm-sans), sans-serif;
 }
 
 .hero{
@@ -59,7 +59,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.875rem;
-  font-family: sans-serif;
+  font-family: var(--font-dm-sans), sans-serif;
   transition: all 0.2s;
 }
 
@@ -76,7 +76,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.875rem;
-  font-family: sans-serif;
+  font-family: var(--font-dm-sans), sans-serif;
   transition: all 0.2s;
 }
 
@@ -135,7 +135,7 @@
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  font-family: sans-serif;
+  font-family: var(--font-dm-sans), sans-serif;
   transition: all 0.2s;
   margin-top: 0.5rem;
 }
@@ -255,7 +255,7 @@
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-font-family: sans-serif; transition: all 0.2s;
+font-family: var(--font-dm-sans), sans-serif; transition: all 0.2s;
 }
 
 .signInBtn:hover {
@@ -345,7 +345,7 @@ font-family: sans-serif; transition: all 0.2s;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-font-family: sans-serif; transition: all 0.2s;
+font-family: var(--font-dm-sans), sans-serif; transition: all 0.2s;
 }
 
 .analyzeBtn:hover {
