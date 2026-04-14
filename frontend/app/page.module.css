@@ -393,9 +393,53 @@ font-family: var(--font-dm-sans), sans-serif; transition: all 0.2s;
   margin: 0;
 }
 
-/* Header actions */
+/* header actions */
 .headerActions {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+    .heroTitle {
+        font-size: 2.2rem;
+    }
+
+    .heroContent {
+        margin: 3rem auto 2rem;
+        padding: 0 0.5rem;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .nav {
+        padding: 1rem 0;
+    }
+
+    .nav {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .navActions {
+        gap: 0.5rem;
+    }
+
+    .navHistoryBtn {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.75rem;
+    }
+
+    .appSection {
+        padding: 2rem 1rem;
+    }
+
+    .heroBtn {
+        width: 100%;
+        text-align: center;
+    }
 }
