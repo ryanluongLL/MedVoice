@@ -165,7 +165,7 @@ export default function Dashboard() {
                                 <p className={styles.chartTitle}>Most Common Charges</p>
                                 <div style={{ overflowX: 'auto' }}>
                                     <div style={{ minWidth: '500px' }}>
-                                        <ResponsiveContainer width="100%" height={350}>
+                                        <ResponsiveContainer width="100%" height={250}>
                                             <BarChart data={topCharges} layout="vertical" margin={{ left: 10 }} style={{ outline: 'none' }}>
                                                 <CartesianGrid strokeDasharray="3 3" stroke="#e8f0f3" />
                                                 <XAxis
@@ -175,7 +175,7 @@ export default function Dashboard() {
                                                 <YAxis
                                                     dataKey="name"
                                                     type="category"
-                                                    tick={{ fontSize: 11, fill: '#5a7a8a', fontFamily: MONO }}
+                                                    tick={{ fontSize: 11, fill: '#112d3b', fontFamily: MONO }}
                                                     width={200}
                                                 />
                                                 <Tooltip
@@ -184,7 +184,7 @@ export default function Dashboard() {
                                                     labelStyle={{ color: '#02C39A', fontWeight: 'bold' }}
                                                     itemStyle={{ color: '#ffffff' }}
                                                 />
-                                                <Bar dataKey="count" fill="#02C39A" radius={[0, 4, 4, 0]} />
+                                                <Bar dataKey="count" fill="#02C39A" radius={[0, 4, 4, 0]} barSize={24} />
                                             </BarChart>
                                         </ResponsiveContainer>
                                     </div>
