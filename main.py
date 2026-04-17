@@ -16,6 +16,7 @@ app.add_middleware(
         "http://localhost:3000",
         "https://med-voice-kappa.vercel.app",
         "https://med-voice-git-main-ryanluonglls-projects.vercel.app",
+        "https://medvoiceapp.vercel.app/",
     ],
     allow_credentials=True,
     allow_methods=["*"],
