@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { useUser } from "@clerk/nextjs"
+import { useUser, useAuth } from "@clerk/nextjs"
 import styles from './history.module.css'
 import Spinner from "../components/Spinner/Spinner"
 export default function History() {
@@ -9,6 +9,7 @@ export default function History() {
     const [loading, setLoading] = useState(true)
     const { user } = useUser()
     const router = useRouter()
+    const { getToken } = useAuth()
 
     useEffect(() => {
         document.title = 'Bill History | MedVoice'
@@ -16,7 +17,10 @@ export default function History() {
         
         const fetchHistory = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/history/${user.id}`)
+                const token = await getToken()
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/history/${user.id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
                 const data = await res.json()
                 setRecords(data)
             }

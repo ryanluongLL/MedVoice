@@ -5,8 +5,10 @@ from dotenv import load_dotenv
 import pdfplumber, json, io, uuid
 from database import get_db, BillAnalysis
 from sqlalchemy.orm import Session
-from fastapi import Depends
+from fastapi import Depends, Request
 import base64
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 LANGUAGE_MAP = {
     "en": "English",
@@ -22,7 +24,6 @@ LANGUAGE_MAP = {
 load_dotenv()
 router = APIRouter()
 client = Anthropic()
-
 
 class BillRequest(BaseModel):
     bill_text: str
@@ -67,8 +68,11 @@ def analyze_bill(request: BillRequest):
     return result
 
 
+limiter = Limiter(key_func=get_remote_address)
 @router.post("/analyze-pdf")
+@limiter.limit("5/minute")
 async def analyze_pdf(
+    request: Request,
     file: UploadFile = File(...),
     language: str = Form("en"),
     user_id: str = Form("anonymous"),

@@ -267,6 +267,12 @@ export default function Home() {
                 <p className={styles.trustNote}>
                   🔒 Your bill is never stored. Analysis happens in real time.
                 </p>
+                <p className={styles.privacyNote}>
+                  By using MedVoice you agree to our{' '}
+                  <span onClick={() => router.push('/privacy')} className={styles.privacyLink}>
+                      Privacy Policy
+                  </span>
+              </p>
             </>
           )}
         </div>

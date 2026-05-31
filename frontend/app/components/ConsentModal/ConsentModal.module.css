@@ -1,0 +1,133 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 35, 66, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+}
+
+.modal {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 480px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.logoRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logoIcon {
+    background: #02C39A;
+    color: #0a2342;
+    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.logoText {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #0a2342;
+    font-family: var(--font-dm-sans), sans-serif;
+}
+
+.title {
+    color: #0a2342;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+    font-family: var(--font-dm-sans), sans-serif;
+}
+
+.body {
+    color: #5a7a8a;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+    font-family: var(--font-inter), sans-serif;
+}
+
+.list {
+    color: #0a2342;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: var(--font-inter), sans-serif;
+}
+
+.link {
+    color: #5a7a8a;
+    font-size: 0.825rem;
+    margin: 0;
+    font-family: var(--font-inter), sans-serif;
+}
+
+.privacyLink {
+    color: #028090;
+    text-decoration: underline;
+}
+
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.declineBtn {
+    flex: 1;
+    background: transparent;
+    border: 1px solid #e8f0f3;
+    color: #5a7a8a;
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-inter), sans-serif;
+    transition: all 0.2s;
+}
+
+.declineBtn:hover {
+    border-color: #0a2342;
+    color: #0a2342;
+}
+
+.agreeBtn {
+    flex: 2;
+    background: #0a2342;
+    border: none;
+    color: #ffffff;
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font-inter), sans-serif;
+    transition: all 0.2s;
+}
+
+.agreeBtn:hover {
+    background: #02C39A;
+    color: #0a2342;
+}

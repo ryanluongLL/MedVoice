@@ -1,0 +1,60 @@
+.main {
+    min-height: 100vh;
+    background: #f4f7f9;
+    font-family: var(--font-inter), sans-serif;
+    padding: 3rem 2rem;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.title {
+    color: #0a2342;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    font-family: var(--font-dm-sans), sans-serif;
+}
+
+.updated {
+    color: #5a7a8a;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.section h2 {
+    color: #0a2342;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    font-family: var(--font-dm-sans), sans-serif;
+}
+
+.section p {
+    color: #5a7a8a;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.section ul {
+    color: #5a7a8a;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}

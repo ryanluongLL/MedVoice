@@ -2,6 +2,9 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from anthropic import Anthropic
 from dotenv import load_dotenv
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from fastapi import Request
 import json
 
 load_dotenv()
@@ -25,9 +28,10 @@ class AppealRequest(BaseModel):
     charges: list
     red_flags: list
 
-
+limiter = Limiter(key_func=get_remote_address)
 @router.post("/generate-appeal")
-def generate_appeal(request: AppealRequest):
+@limiter.limit("5/minute")
+def generate_appeal(request: Request, request_data: AppealRequest):
     red_flags_text = "\n".join([f"-{flag}" for flag in request.red_flags])
     charges_text = "\n".join(
         [f"-{c['name']}: {c['amount']} ({c['explanation']})" for c in request.charges]

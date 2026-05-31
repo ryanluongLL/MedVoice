@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from fastapi import APIRouter, Request
 from pydantic import BaseModel
 from anthropic import Anthropic
 from dotenv import load_dotenv
@@ -19,9 +21,10 @@ class ChatRequest(BaseModel):
     bill_context: dict
     history: list[Message] = []
 
-
+limiter = Limiter(key_func=get_remote_address)
 @router.post("/chat")
-def chat(request: ChatRequest):
+@limiter.limit("20/minute")
+def chat(request: Request, request_data: ChatRequest):
     bill = request.bill_context
 
     system_prompt = f"""You are a helpful medical billing assistant.

@@ -3,6 +3,8 @@ import "./globals.css"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Toaster } from 'react-hot-toast'
 import FloatingChat from "./components/FloatingChat/FloatingChat"
+import ConsentModal from './components/ConsentModal/ConsentModal'
+
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
@@ -32,6 +34,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={`${dmSans.variable} ${inter.variable}`}>
           {children}
+          <ConsentModal />
           <FloatingChat />
           <Toaster
             position="bottom-right"
