@@ -1,28 +1,32 @@
-import { DM_Sans, Inter } from "next/font/google"
+import { Fraunces, Source_Sans_3, IBM_Plex_Mono } from "next/font/google"
 import "./globals.css"
-import { ClerkProvider } from "@clerk/nextjs"
-import { Toaster } from 'react-hot-toast'
-import FloatingChat from "./components/FloatingChat/FloatingChat"
-import ConsentModal from './components/ConsentModal/ConsentModal'
+import { Toaster } from "react-hot-toast"
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600'],
+  style: ['normal'],
 })
 
-const inter = Inter({
-  variable: "--font-inter",
+const sourceSans = Source_Sans_3({
+  variable: "--font-source-sans",
+  subsets: ["latin"],
+  weight: ['400', '500', '600'],
+})
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
   weight: ['400', '500', '600'],
 })
 
 export const metadata = {
   title: {
-    default: 'MedVoice - Understand Your Medical Bill',
+    default: 'MedVoice — check your bill against the real benchmark',
     template: '%s | MedVoice',
   },
-  description: "Understand your medical bill instantly with AI",
+  description: "Enter a CPT code and the amount you were billed. See the public Medicare benchmark rate, cited from CMS data, in seconds.",
   icons: {
     icon: '/favicon.svg',
   },
@@ -30,32 +34,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`${dmSans.variable} ${inter.variable}`}>
-          {children}
-          <ConsentModal />
-          <FloatingChat />
-          <Toaster
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                background: '#0a2342',
-                color: '#ffffff',
-                fontFamily: 'var(--font-inter)',
-                fontSize: '0.875rem',
-                borderRadius: '10px',
-              },
-              success: {
-                iconTheme: {
-                  primary: '#02C39A',
-                  secondary: '#0a2342',
-                },
-              },
-            }}
-          />
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={`${fraunces.variable} ${sourceSans.variable} ${plexMono.variable}`} >
+        {children}
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "#1A1D1A",
+              color: "#FAFAF7",
+              fontFamily: "var(--font-source-sans)",
+              fontSize: "0.875rem",
+              borderRadius: "2px",
+            }
+          }}
+        />
+      </body>
+    </html>
   )
 }

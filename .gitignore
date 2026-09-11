@@ -3,3 +3,6 @@ venv/
 __pycache__/data/raw/
 pricing/benchmark.db
 pricing/fixture.csv
+.DS_Store
+__pycache__/
+*.pyc

@@ -1,29 +1,32 @@
 :root {
-  --background: #ffffff;
-  --foreground: #0a2342;
+  --paper: #FAFAF7;
+  --paper-line: #E4E1D6;
+  --ink: #1A1D1A;
+  --ink-soft: #5B5F56;
+  --accent: #2F5233;
+  --accent-soft: #E8EEE7;
+  --flag: #A6403A;
+  --flag-soft: #F5E9E7;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
 }
 
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-dm-sans), sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

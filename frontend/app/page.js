@@ -1,282 +1,149 @@
-'use client'
-import { useState, useCallback, useRef} from 'react'
-import { useRouter } from 'next/navigation'
-import styles from './page.module.css'
-import { SignInButton, UserButton } from '@clerk/nextjs'
-import LanguageSelector from './components/LanguageSelector/LanguageSelector'
-import { useUser } from '@clerk/nextjs'
-import { motion } from 'motion/react'
-
-const STATS = [
-  { value: '51%', label: 'of insured adults struggle to understand at least one asepect of their health insurance' },
-  { value: '$300B', label: 'lost annually in the US due to the medical billing errors' },
-  { value: '8 in 10', label: 'medical bills contain at least one error according to billing experts'}
-]
+"use client"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import styles from "./page.module.css"
 
 export default function Home() {
-  const [dragging, setDragging] = useState(false)
-  const [file, setFile] = useState(null)
+  const [code, setCode] = useState('')
+  const [billedAmount, setBilledAmount] = useState("")
+  const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [language, setLanguage] = useState('en')
-  const { user, isLoaded } = useUser()
-  const router = useRouter()
-  const appRef = useRef(null)
 
-  const scrollToApp = () => {
-    appRef.current?.scrollIntoView({behavior: 'smooth'})
-  }
-  
-  const handleDrop = useCallback((e) => {
+  const handleCheck = async (e) => {
     e.preventDefault()
-    setDragging(false)
-    const dropped = e.dataTransfer.files[0]
-    const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
-    if (allowed.includes(dropped?.type)) {
-      setFile(dropped)
-      setError(null)
-    } else {
-      setError("Please upload a PDF or image file (JPG, PNG, WEBP")
-    }
-  }, [])
+    if (!code.trim() || !billedAmount) return
 
-  const handleFileInput = (e) => {
-    const selected = e.target.files[0]
-    const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
-    if (allowed.includes(selected?.type)) {
-      setFile(selected)
-      setError(null)
-    } else {
-      setError("Please upload a PDF or image file (JPG, PNG, WEBP)")
-    }
-  }
-
-  const handleAnalyze = async () => {
-    if (!file) return
     setLoading(true)
-    setError(null)
+    setResult(null)
 
     try {
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('language', language)
-      formData.append('user_id', user?.id || 'anonymous') 
-
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/analyze-pdf`, {
-        method: 'POST',
-        body: formData,
+      const res = await fetch("http://localhost:8000/check-charge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code: code.trim(),
+          billed_amount: parseFloat(billedAmount),
+        }),
       })
 
-      if (!res.ok) throw new Error('Analysis failed')
+      if (res.status === 404) {
+        const data = await res.json()
+        toast.error(data.detail)
+        return
+      }
+
+      if (!res.ok) {
+        toast.error("Something went wrong. Please try again.")
+        return
+      }
 
       const data = await res.json()
-      localStorage.setItem('billAnalysis', JSON.stringify(data))
-      router.push('/results')
-    } catch (err) {
-      setError('Something went wrong. Please try again.')
+      setResult(data)
+    }
+    catch (err) {
+      toast.error("Could not reach the server. It is running?")
     } finally {
       setLoading(false)
     }
   }
 
+  const ratio = Number(result?.ratio_vs_benchmark)
+  const isAbove = Boolean(result?.benchmark_available) && Number.isFinite(ratio) && ratio > 1
   return (
     <main className={styles.main}>
-      {/* hero section */}
-      <section className={styles.hero}>
+      <div className={styles.wrap}>
+
         <nav className={styles.nav}>
-          <div className={styles.navLogo}>
-            <span className={styles.navLogoIcon}>+</span>
-            <span className={styles.navLogoText}>MedVoice</span>
-          </div>
-          <div className={styles.navActions}>
-            {isLoaded && user ? (
-              <>
-                <button onClick={() => router.push('/history')} className={styles.navHistoryBtn}>
-                  My history
-                </button>
-
-                <button onClick={() => router.push('/dashboard')} className={styles.navHistoryBtn}>
-                  Dashboard
-                </button>
-
-                <button onClick={() => router.push('/providers')} className={styles.navHistoryBtn}>
-                  Find Providers
-                </button>
-
-                  <UserButton afterSignOutUrl="/sign-in" />
-              </>
-            ) : (
-                <SignInButton mode="redirect">
-                  <button className={styles.navSignInBtn}>Sign In</button>
-                </SignInButton>
-            )}
+          <div className={styles.wordmark}>Med<span>Ledger</span></div>
+          <div className={styles.navlinks}>
+            <a className={styles.navlink} href="/how-it-works">How it works</a>
+            <a className={styles.navlink} href="https://github.com/ryanluongLL/MedVoice" target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         </nav>
 
-        {/* hero content */}
-        <div className={styles.heroContent}>
-          <motion.span
-            className={styles.heroBadge}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{duration: 0.5, ease: 'easeOut'}}
-          >
-              AI-Powered Healthcare Billing
-          </motion.span>
-          
-          <motion.h1
-            className={styles.heroTitle}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
-        >
-            Your medical bill <br />
-            <span className={styles.heroTitleAccent}>finally explained</span>
-          </motion.h1>
-          
-          <motion.p
-              className={styles.heroSubtitle}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
-          >
-              Upload any medical bill and get a complete breakdown of every charge,
-              potential errors flagged, and a professional appeal letter - in seconds.
-          </motion.p>
-
-          <motion.button
-              onClick={scrollToApp}
-              className={styles.heroBtn}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.45, ease: 'easeOut' }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-          >
-              Analyze My Bill →
-          </motion.button>
-        </div>
-
-        {/* Stats */}
-        <div className={styles.stats}>
-          {STATS.map((stat, index) => (
-            <motion.div
-                key={stat.value}
-                className={styles.statCard}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
-            >
-                <p className={styles.statValue}>{stat.value}</p>
-                <p className={styles.statLabel}>{stat.label}</p>
-            </motion.div>
-        ))}
-        </div>
-      </section>
-
-      {/* app section */}
-      <section ref={ appRef} className={styles.appSection}>
-        <div className={styles.appContainer}>
-          <div className={styles.appHeader}>
-            <motion.h2
-                className={styles.appTitle}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-            >
-                Analyze your bill
-            </motion.h2>
-            <motion.p
-                className={styles.appSubtitle}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
-            >
-                Upload a PDF of your medical bill and select your preferred language
-            </motion.p>
-        </div>
-
-          {!isLoaded ? null : !user ? (
-            <div className={styles.signInPrompt}>
-              <p className={styles.signInIcon}></p>
-              <p className={styles.signInTitle}>Sign in to get started</p>
-              <p className={styles.signInDesc}>
-                Create a free account to analyze your bill and save your history
-              </p>
-              <SignInButton mode="redirect">
-                  <button className={styles.signInBtn}>Sign In / Sign Up</button>
-              </SignInButton>
+        <div className={styles.hero}>
+          <div>
+            <div className={styles.eyebrow}>Cross-referenced with CMS fee schedule data</div>
+            <h1 className={styles.h1}>
+              See what Medicare<br />
+              actually pays for<br />
+              <em>your procedure code.</em>
+            </h1>
+            <p className={styles.sub}>
+              Enter the CPT code and amount from your bill. We compare it against
+              the public, government-published benchmark rate. No upload, no
+              document, no account.
+            </p>
+            <div className={styles.sourceLine}>
+              SOURCE: CMS PHYSICIAN FEE SCHEDULE, RVU26B, APR 2026 RELEASE
             </div>
-          ) : (
-            <>
-                <motion.div
-                  className={`${styles.uploadCard} ${dragging ? styles.uploadCardDragging : ''}`}
-                  onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
-                  onDragLeave={() => setDragging(false)}
-                  onDrop={handleDrop}
-                  whileHover={{ scale: 1.01, boxShadow: '0 8px 24px rgba(2, 195, 154, 0.12)' }}
-                  transition={{ duration: 0.2 }}
-              >
-                  <div className={styles.uploadIcon}>📄</div>
-                  {file ? (
-                    <div>
-                      <p className={styles.fileName}>{file.name}</p>
-                      <p className={styles.fileReady}>Ready to analyze</p>
-                    </div>
-                  ) : (
-                      <div>
-                        <p className={styles.uploadTitle}>Drag & drop your bill here</p>
-                        <p className={styles.uploadSub}>PDF, JPG, PNG or WEBP</p>
-                      </div>
-                  )}
-                  <label className={styles.browseBtn}>
-                    {file ? 'Change File' : 'Browse File'}
-                    <input
-                      type="file"
-                      accept=".pdf,.jpg,.jpeg,.png,.webp"
-                      onChange={handleFileInput}
-                      style={{display: 'none'}}
-                    />
-                  </label>
-                </motion.div>
+          </div>
 
-                {error && <p className={styles.error}>{error}</p>}
-                
-                <LanguageSelector selected={language} onChange={setLanguage} />
+          <div>
+            <form className={styles.ledger} onSubmit={handleCheck}>
+              <div className={styles.ledgerRow}>
+                <label className={styles.ledgerLabel} htmlFor="code">CPT Code</label>
+                <input
+                  id="code"
+                  className={styles.ledgerInput}
+                  placeholder="99213"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  maxLength={5}
+                  autoComplete="off"
+                />
+              </div>
+              <div className={styles.ledgerRow}>
+                <label className={styles.ledgerLabel} htmlFor="amount">You were billed</label>
+                <input
+                  id="amount"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  className={styles.ledgerInput}
+                  placeholder="400.00"
+                  value={billedAmount}
+                  onChange={(e) => setBilledAmount(e.target.value)}
+                  autoComplete="off"
+                />
+              </div>
+              <button type="submit" className={styles.ledgerBtn} disabled={loading}>
+                {loading ? 'Checking' : 'Check against benchmark'}
+              </button>
+            </form>
 
-                <motion.button
-                  onClick={handleAnalyze}
-                  disabled={!file || loading}
-                  className={`${styles.analyzeBtn} ${!file || loading ? styles.analyzeBtnDisabled : ''}`}
-                  animate={file && !loading ? { scale: [1, 1.02, 1] } : {}}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                  whileHover={file && !loading ? { scale: 1.02 } : {}}
-                  whileTap={file && !loading ? { scale: 0.98 } : {}}
-              >
-                  {loading ? (
-                      <span className={styles.loadingRow}>
-                          <span className={styles.spinner} />
-                          Analyzing your bill...
-                      </span>
-                  ) : 'Analyze My Bill'}
-              </motion.button>
+            <div aria-live="polite">
+              {result && result.benchmark_available && (
+                <div className={`${styles.result} ${isAbove ? styles.resultFlag : ''}`}>
+                  <div className={styles.resultDesc}>
+                    <strong>{result.description}</strong>
+                    Medicare non-facility benchmark: ${result.benchmark_nonfacility.toFixed(2)}
+                  </div>
+                  <div className={styles.resultRatio}>
+                    {ratio}&times;
+                    <span>vs. benchmark</span>
+                  </div>
+                </div>
+              )}
 
-                <p className={styles.trustNote}>
-                  🔒 Your bill is never stored. Analysis happens in real time.
-                </p>
-                <p className={styles.privacyNote}>
-                  By using MedVoice you agree to our{' '}
-                  <span onClick={() => router.push('/privacy')} className={styles.privacyLink}>
-                      Privacy Policy
-                  </span>
-              </p>
-            </>
-          )}
+              {result && !result.benchmark_available && (
+                <div className={styles.resultNeutral}>
+                  <strong>{result.description}</strong>
+                  {result.reason}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </section>
+
+        <footer className={styles.footer}>
+          Benchmark figures reflect Medicare&apos;s national non-facility rate and are a
+          public reference point, not a legal maximum. Private insurance and cash-pay
+          pricing commonly differ. This tool provides comparison context, not a billing
+          dispute or legal determination.
+        </footer>
+
+      </div>
     </main>
   )
 }

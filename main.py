@@ -15,7 +15,7 @@ app = FastAPI(title="MedVoice API")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-create_tables()
+# create_tables()
 
 
 app.add_middleware(
