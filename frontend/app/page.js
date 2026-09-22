@@ -141,6 +141,7 @@ export default function Home() {
           public reference point, not a legal maximum. Private insurance and cash-pay
           pricing commonly differ. This tool provides comparison context, not a billing
           dispute or legal determination.
+          {' '}<a href="/privacy" className={styles.footerLink}>Privacy</a>
         </footer>
 
       </div>
