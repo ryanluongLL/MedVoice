@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from routers import analyze, appeal, chat, pricing
+from routers import analyze, appeal, chat, pricing, match
 from database import create_tables
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
@@ -34,6 +34,7 @@ app.include_router(analyze.router)
 app.include_router(appeal.router)
 app.include_router(chat.router)
 app.include_router(pricing.router)
+app.include_router(match.router)
 @app.get("/")
 def root():
     return {"message": "MedVoice API is running"}
