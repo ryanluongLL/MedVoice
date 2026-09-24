@@ -16,7 +16,7 @@ from matcher import get_matcher
 
 router = APIRouter()
 
-class MatchRequest(BadeModel):
+class MatchRequest(BaseModel):
     description: str
 
 @router.post("/match-code")

@@ -5,11 +5,12 @@ set of common patient-facing codes verified active in benchmark.db.
 Returns one of: unsupported (lab/preventive), low_confidence, confident
 (single clear answer), or needs_selection (tied family, show a shortlist).
 """
+import os
 import sqlite3
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-DB_PATH = "benchmark.db"
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "benchmark.db")
 
 # The 37 codes verified active in the real dataset, spanning office visits,
 # immunizations, imaging, EKG, and minor procedures. Labs and preventive
@@ -50,6 +51,11 @@ SYNONYMS = {
     "doctor visit": "office visit",
     "new patient": "office o/p new",
     "established patient": "office o/p est",
+    "one view": "1 view",
+    "two views": "2 views",
+    "three views": "3 views",
+    "four views": "4 views",
+    "single view": "1 view",
 }
 
 LAB_TERMS = [
