@@ -33,7 +33,7 @@ export default function Home() {
     setMatchResult(null)
 
     try {
-      const res = await fetch('http://localhost:8000/match-code', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/match-code`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description: description.trim() }),
@@ -69,7 +69,7 @@ export default function Home() {
     setResult(null)
 
     try {
-      const res = await fetch('http://localhost:8000/check-charge', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/check-charge`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
