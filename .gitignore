@@ -7,3 +7,4 @@ data/raw/
 pricing/benchmark.db
 pricing/fixture.csv
 .vscode/
+frontend/.env.local
