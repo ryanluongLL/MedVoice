@@ -23,10 +23,10 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata = {
   title: {
-    default: 'MedVoice — check your bill against the real benchmark',
-    template: '%s | MedVoice',
+    default: 'MedLedger: check your bill against the real benchmark',
+    template: '%s | MedLedger',
   },
-  description: "Enter a CPT code and the amount you were billed. See the public Medicare benchmark rate, cited from CMS data, in seconds.",
+  description: "Enter a CPT code and the amount you were billed. See the public Medicare benchmark rate, cited from CMS data, in seconds. No upload, no account, nothing stored.",
   icons: {
     icon: '/favicon.svg',
   },
@@ -35,7 +35,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${fraunces.variable} ${sourceSans.variable} ${plexMono.variable}`} >
+      <body className={`${fraunces.variable} ${sourceSans.variable} ${plexMono.variable}`}>
         {children}
         <Toaster
           position="bottom-right"
